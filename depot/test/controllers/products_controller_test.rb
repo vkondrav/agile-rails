@@ -61,4 +61,13 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to products_url
   end
+
+  test "list of products is valid" do
+    get products_path
+    assert_response :success
+
+    assert_select "nav a", minimum: 4
+    assert_select "main table tbody tr", 3
+    assert_select "main table tbody h1", products(:one).title
+  end
 end
