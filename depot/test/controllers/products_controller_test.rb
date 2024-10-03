@@ -70,4 +70,12 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_select "main table tbody tr", 3
     assert_select "main table tbody h1", products(:one).title
   end
+
+  test "should not destroy product" do
+    assert_raises ActiveRecord::RecordNotDestroyed do
+      delete product_url(products(:two))
+    end
+
+    assert Product.exists?(products(:two).id)
+  end
 end
